@@ -115,3 +115,24 @@ deleteBtn.addEventListener("click", function () {
     changeDisplay();
   }
 });
+
+percent.addEventListener("click", function () {
+  if (calcArray.length > 0) {
+    const curVal = calcArray.join("") / 100;
+    calcArray.length = 0;
+    calcArray.push(...String(curVal).split(""));
+    changeDisplay();
+  }
+});
+
+signs.addEventListener("click", function () {
+  if (calcArray.length > 0) {
+    if (calcArray[0] !== "-") {
+      calcArray.unshift("-");
+      changeDisplay();
+    } else {
+      calcArray.shift();
+      changeDisplay();
+    }
+  }
+});
