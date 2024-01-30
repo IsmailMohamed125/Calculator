@@ -1,3 +1,5 @@
+"use strict";
+
 function add(a, b) {
   return a + b;
 }
@@ -34,6 +36,9 @@ const operators = document.querySelectorAll(".operators");
 const equal = document.querySelector(".btn-eql");
 const clear = document.querySelector(".clear");
 const deleteBtn = document.querySelector(".delete");
+const percent = document.querySelector(".percent");
+const signs = document.querySelector(".change-sign");
+const dec = document.querySelector(".btn-dec");
 let calcArray = [];
 let isActionOne = true;
 let currentValue;
@@ -44,7 +49,6 @@ digits.forEach((digit) =>
     decCheck();
     calcArray.push(`${digit.textContent}`);
     changeDisplay();
-    console.log(calcArray);
   })
 );
 
@@ -65,20 +69,16 @@ operators.forEach((op) => {
       currentCalc.textContent = `${firstNumber} ${operator}`;
       answer.textContent = 0;
       calcArray = [];
-      // dec.disabled = false;
       isActionOne = !isActionOne;
     } else {
       currentValue = +answer.textContent;
       secondNumber = currentValue;
-      console.log(secondNumber, firstNumber, operator);
       newAnswer = operate(firstNumber, operator, secondNumber);
-      console.log(newAnswer);
       firstNumber = newAnswer;
       operator = op.textContent;
       currentCalc.textContent = `${firstNumber} ${operator}`;
       answer.textContent = 0;
       calcArray = [];
-      // dec.disabled = false;
     }
   });
 });
@@ -92,10 +92,8 @@ equal.addEventListener("click", function () {
     secondNumber = +answer.textContent;
     answer.textContent = operate(firstNumber, operator, secondNumber);
     calcArray = [...answer.textContent];
-    // console.log(calcArray);
     currentCalc.textContent = "";
     reset();
-    // console.log(secondNumber, firstNumber);
     isActionOne = true;
   }
 });
@@ -108,6 +106,12 @@ clear.addEventListener("click", function () {
   answer.textContent = 0;
   isActionOne = true;
 });
+
+function reset() {
+  firstNumber = undefined;
+  secondNumber = undefined;
+  operator = undefined;
+}
 
 deleteBtn.addEventListener("click", function () {
   if (calcArray.length > 0) {
@@ -136,3 +140,11 @@ signs.addEventListener("click", function () {
     }
   }
 });
+
+function decCheck() {
+  if (calcArray.includes(".")) {
+    dec.disabled = true;
+  } else {
+    dec.disabled = false;
+  }
+}
